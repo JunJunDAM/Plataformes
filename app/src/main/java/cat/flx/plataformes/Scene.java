@@ -24,6 +24,7 @@ class Scene {
     private int WATERLEVEL, SKY, WATERSKY, WATER;
 
     private List<Coin> coins;
+    private List<Crab> crabs;
 
     Scene(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
@@ -31,6 +32,7 @@ class Scene {
         CHARS = new SparseIntArray();
         WATERLEVEL = 999;
         coins = new ArrayList<>();
+        crabs = new ArrayList<>();
     }
 
     void loadFromFile(int resource) {
@@ -84,16 +86,13 @@ class Scene {
                         coins.add(coin);
                         break;
                     case "ENEMY":
-                        /*
-                        String[] parts = line.split("=");
-                        String[] coors = parts[1].trim().split(",");
-                        Enemy enemy = new Enemy(game);
-                        enemy.x1 = Integer.parseInt(coors[0].trim()) * 16;
-                        enemy.x2 = Integer.parseInt(coors[1].trim()) * 16;
-                        enemy.y = Integer.parseInt(coors[2].trim()) * 16 - 6;
-                        enemy.x = enemy.x1;
-                        game.addEnemy(enemy);
-                         */
+                        parts2 = args.split(",");
+                        int xi = Integer.parseInt(parts2[0].trim()) * 16;
+                        int xf = Integer.parseInt(parts2[1].trim()) * 16;
+                        int dy = Integer.parseInt(parts2[2].trim()) * 16;
+                        Crab crab = new Crab(gameEngine, xi, xf, dy);
+                        crabs.add(crab);
+
                         break;
                 }
             }
@@ -137,6 +136,9 @@ class Scene {
         for(Coin coin : coins){
             coin.physics(delta);
         }
+        for (Crab crab : crabs){
+            crab.physics(delta);
+        }
     }
 
     // Scene draw
@@ -169,9 +171,12 @@ class Scene {
                 Bitmap bitmap = gameEngine.getBitmap(index);
                 canvas.drawBitmap(bitmap, x * 16, y * 16, paint);
             }
-            for (Coin coin: coins){
-                coin.draw(canvas);
-            }
+        }
+        for (Coin coin: coins){
+            coin.draw(canvas);
+        }
+        for (Crab crab: crabs){
+            crab.draw(canvas);
         }
     }
 }

@@ -8,6 +8,7 @@ public class Coin extends Character {
 
     Coin(GameEngine gameEngine, int x, int y) {
         super(gameEngine, x, y);
+        this.sprite = (int)(Math.random() * 5);
     }
 
     private static final int [][] ANIMATIONS = new int[][]{

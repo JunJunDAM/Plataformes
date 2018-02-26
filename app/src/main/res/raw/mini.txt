@@ -27,3 +27,4 @@ COIN   = 19,3
 COIN   = 20,4
 COIN   = 21,6
 ENEMY  = 0,10,14
+ENEMY  = 11,14,4
